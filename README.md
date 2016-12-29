@@ -1,32 +1,8 @@
 # gamayun
+## description
+Gamayun is a mythical bird from slavic folk lore that symbolizes wisdom and knowledge. The goal of this application is to help people learn Clojure programming through the use of a spaced repetition algorithm and various other learning techniques. In addition I will be learning Clojure while I make this application.
 
-FIXME: description
 
-## Installation
-
-Download from http://example.com/FIXME.
-
-## Usage
-
-FIXME: explanation
-
-    $ java -jar gamayun-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
 
 ## License
 
