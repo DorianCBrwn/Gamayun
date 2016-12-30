@@ -9,14 +9,20 @@
 
 (defn def-keyvalue
   [m fn-name]
- (:doc (meta (var (str "#'clojure.core/" (get m fn-name)))))
+ (:doc (meta (symbol (str "#'clojure.core/" (get m fn-name))))))
 
-(def deck-structure
- {:deck {:card {:fm-name
-                       :fm-def
-                       :fm-args}})
-(defn add-card
- (assoc-in deck-structure
+
+(def deck-structure {:deck {:card {:fm-name "map"
+                                   :fm-def "Returns a lazy sequence consisting of the result of applying f to
+                                            the set of first items of each coll, followed by applying f to the
+                                            set of second items in each coll, until any one of the colls is
+                                            exhausted."
+                                   :fm-args "(map f coll)"}}})
+(defn add-card [map card]
+ (assoc deck-structure :deck card))
+
+(defn remove-card [card]
+ (dissoc deck-structure card))
 
 
 (def example-card {:id (inc id-count)
