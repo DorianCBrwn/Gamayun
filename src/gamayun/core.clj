@@ -32,3 +32,15 @@
                    :example '(map + [4 5 6] [1 2 3])})
 
 (def example-deck [ example-card example-card example-card])
+
+(defn pull-meta-data [nspace]
+  (map meta (vals (ns-map nspace))))
+
+(defn pull-fm-name [nspace]
+  (remove nil? (map :name (pull-meta-data nspace))))
+
+(defn pull-fm-args [nspace]
+  (remove nil? (map :arglists (pull-meta-data nspace))))
+
+(defn pull-fm-docs [nspace]
+  (remove nil? (map :doc (pull-meta-data nspace))))
