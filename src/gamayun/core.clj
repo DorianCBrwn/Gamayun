@@ -51,7 +51,11 @@
 (defn doc-kw? [map]
   (contains? map :doc))
 
-(defn create-card-map [namespace]
-  (select-keys (into {} (filter doc-kw? (pull-meta-data namespace)) [:name :arglists :doc])))
+(defn filter-by-doc [namespace]
+  (filter doc-kw? (pull-meta-data namespace)))
 
-(escape-class-name)
+(defn create-card-num-keywords [namespace]
+  (range (count (filter doc-kw? (pull-meta-data namespace)))))
+
+(defn create-card-map [namespace]
+  (zipmap (create-card-num-keywords namespace) (filter-by-doc namespace)))
