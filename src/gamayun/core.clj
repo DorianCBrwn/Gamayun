@@ -44,3 +44,14 @@
 
 (defn pull-fm-docs [nspace]
   (remove nil? (map :doc (pull-meta-data nspace))))
+
+(defn name-kw? [map]
+  (contains? map :name))
+
+(defn doc-kw? [map]
+  (contains? map :doc))
+
+(defn create-card-map [namespace]
+  (select-keys (into {} (filter doc-kw? (pull-meta-data namespace)) [:name :arglists :doc])))
+
+(escape-class-name)
