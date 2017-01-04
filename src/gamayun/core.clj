@@ -51,11 +51,20 @@
 (defn doc-kw? [map]
   (contains? map :doc))
 
+(defn arg-kw? [map]
+  (contains? map :arglists))
+
 (defn filter-by-doc [namespace]
   (filter doc-kw? (pull-meta-data namespace)))
+
+(defn filter-by-args [namespace]
+  (filter arg-kw? (pull-meta-data namespace)))
 
 (defn create-card-num-keywords [namespace]
   (range (count (filter doc-kw? (pull-meta-data namespace)))))
 
 (defn create-card-map [namespace]
   (zipmap (create-card-num-keywords namespace) (filter-by-doc namespace)))
+
+(def clj-core-map
+ (create-card-map 'clojure.core))
