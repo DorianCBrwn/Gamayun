@@ -57,6 +57,9 @@
 (defn filter-by-doc [namespace]
   (filter doc-kw? (pull-meta-data namespace)))
 
+(defn filter-by-name [namespace]
+  (filter name-kw? (pull-meta-data namespace)))
+
 (defn filter-by-args [namespace]
   (filter arg-kw? (pull-meta-data namespace)))
 
@@ -68,3 +71,6 @@
 
 (def clj-core-map
  (create-card-map 'clojure.core))
+
+(def clj-core-list
+  (filter-by-args 'clojure.core))
