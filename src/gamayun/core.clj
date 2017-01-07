@@ -1,35 +1,20 @@
 (ns gamayun.core)
 
-
-(def clj-core-map
-  (ns-map 'clojure.core))
-
-
-(defn transform-vals [map f & rkeys]
+(defn transform-vals [map f]
+  "apply given function to all values in a map"
   (reduce-kv (fn [map k v]
               (assoc map k (f v))) {} map))
 
+(defn keywordize-symbols [m]
+  "Turns symbol keys into keywords"
+  (reduce-kv (fn [m k v]
+               (assoc m (keyword k) v)) {} m ))
 
-(defn name-kw? [map]
-  (contains? map :name))
+(defn deck-map [ns]
+  "creates a deck  map data structure based provided of the provided namespace"
+  (keywordize-symbols (transform-vals (ns-map ns) meta)))
 
-(defn doc-kw? [map]
-  (contains? map :doc))
+(defn remove-vals [ns k]
+  "remove keys from specific keys"
+  (update-in (deck-map ns) [k] dissoc :file :line :column :ns :static))
 
-(defn arg-kw? [map]
-  (contains? map :arglists))
-
-(defn filter-by-doc [namespace]
-  (filter doc-kw? (pull-meta-data namespace)))
-
-(defn filter-by-name [namespace]
-  (filter name-kw? (pull-meta-data namespace)))
-
-(defn filter-by-args [namespace]
-  (filter arg-kw? (pull-meta-data namespace)))
-
-(defn create-card-num-keywords [namespace]
-  (range (count (filter doc-kw? (pull-meta-data namespace)))))
-
-(defn create-card-map [namespace]
-  (zipmap (create-card-num-keywords namespace) (filter-by-doc namespace)))
