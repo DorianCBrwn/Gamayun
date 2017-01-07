@@ -10,10 +10,6 @@
   (reduce-kv (fn [m k v]
                (assoc m (keyword k) v)) {} m ))
 
-(defn deck-map [ns]
-  "creates a deck  map data structure based provided of the provided namespace"
-  (keywordize-symbols (transform-vals (ns-map ns) meta)))
-
 (defn remove-vals [ns k]
   "remove keys from specific keys"
   (update-in (deck-map ns) [k] dissoc :file :line :column :ns :static))
