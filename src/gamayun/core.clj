@@ -18,4 +18,8 @@
   "remove keys from specific keys"
   (update-in (deck-map ns) [k] dissoc :file :line :column :ns :static))
 
-
+(defn show-card [d]
+  (if (= (get-in d [(rand-nth (keys d)) :name]) nil? )
+    (show-card d)
+    (println (get-in d [(rand-nth (keys d)) :name]))))
+  
