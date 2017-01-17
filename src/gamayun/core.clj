@@ -10,16 +10,17 @@
   (reduce-kv (fn [m k v]
                (assoc m (keyword k) v)) {} m ))
 
-(defn deck-map [ns]
-  "creates a deck  map data structure based provided of the provided namespace"
-  (keywordize-symbols (transform-vals (ns-map ns) meta)))
+(defn contains-arglist [m]
+  (apply dissoc m (for [[k v] m :when (not ( contains? v :arglists ))] k)))
+
 
 (defn remove-vals [ns k]
   "remove keys from specific keys"
-  (update-in (deck-map ns) [k] dissoc :file :line :column :ns :static))
+  (update-in (deck-map ns) [k] dissoc [:file :line :column :ns :static]))
 
 (defn show-card [d]
-  (if (= (get-in d [(rand-nth (keys d)) :name]) nil? )
-    (show-card d)
-    (println (get-in d [(rand-nth (keys d)) :name]))))
-  
+    (println (get-in d [(rand-nth (keys d)) :name])))
+
+(defn deck-map [ns]
+  "creates a deck  map data structure based provided of the provided namespace"
+  (contains-arglist (keywordize-symbols (transform-vals (ns-map ns) meta))))
