@@ -5,21 +5,25 @@
   (reduce-kv (fn [map k v]
                (assoc map k (f v))) {} map))
 
-(defn keywordize-symbols [m]
+(defn keywordize-symbols [dm]
   "Turns symbol keys into keywords"
-  (reduce-kv (fn [m k v]
-               (assoc m (keyword k) v)) {} m ))
+  (reduce-kv (fn [dm k v]
+               (assoc dm (keyword k) v)) {} dm ))
 
-(defn contains-arglist [m]
-  (apply dissoc m (for [[k v] m :when (not ( contains? v :arglists ))] k)))
+(defn contains-arglist [dm]
+  (apply dissoc dm (for [[k v] dm :when (not ( contains? v :arglists ))] k)))
 
 
 (defn remove-vals [ns k]
   "remove keys from specific keys"
   (update-in (deck-map ns) [k] dissoc [:file :line :column :ns :static]))
 
-(defn show-card [d]
-    (println (get-in d [(rand-nth (keys d)) :name])))
+(defn show-card [dm]
+    (println (get-in dm [(rand-nth (keys dm)) :name])))
+
+(defn print-card [dm ck cv]
+ (println (filter-map (get-in dm [ck]) [cv])))
+
 
 (defn deck-map [ns]
   "creates a deck  map data structure based provided of the provided namespace"
